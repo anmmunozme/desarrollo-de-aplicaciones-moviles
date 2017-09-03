@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">TicTacToe</string>
+    <string name="newGame_label">New Game</string>
+    <string name="first_human">You go first.</string>
+    <string name="turn_human">Your turn.</string>
+    <string name="turn_computer">Android\'s turn.</string>
+    <string name="result_tie">It\'s a tie.</string>
+    <string name="result_human_wins">You won!</string>
+    <string name="result_computer_wins">Android won!</string>
+
+    <string name="info">Info</string>
+
+    <string name="human">Human: </string>
+    <string name="ties">Ties: </string>
+    <string name="android">Android: </string>
+
+    <string name="difficulty_choose">Dificultad: </string>
+    <string name="difficulty_easy">Facil</string>
+    <string name="difficulty_harder">Dificil</string>
+    <string name="difficulty_expert">Experto</string>
+
+    <string name="quit_question">Desea salir de la aplicación?</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+
+
+</resources>
