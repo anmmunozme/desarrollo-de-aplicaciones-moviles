@@ -2,10 +2,12 @@ package com.example.angee.tictactoe;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -178,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         switch (item.getItemId()){
             case R.id.new_game:
@@ -188,6 +191,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.quit:
                 showDialog(DIALOG_QUIT_ID);
+                return true;
+            case R.id.about:
+                Context context = getApplicationContext();
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+                View layout = inflater.inflate(R.layout.about_dialog, null);
+                builder.setView(layout)
+                        .setPositiveButton("OK", null)
+                        .create().show();
+                //Dialog dialog = builder.create();
+
                 return true;
         }
         return true;
@@ -243,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog = builder.create();
 
                 break;
+
         }
 
         return dialog;
