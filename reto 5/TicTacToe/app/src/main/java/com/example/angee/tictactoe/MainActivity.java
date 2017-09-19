@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,11 +47,32 @@ public class MainActivity extends AppCompatActivity {
 
     private BoardView mBoardView;
     private char mGoFirst = TicTacToeGame.HUMAN_PLAYER;
+
+    MediaPlayer mHumanMediaPlayer;
+    MediaPlayer mComputerMediaPlayer;
 /*
-    private SharedPreferences mPrefs;
-    private Handler mPauseHandler;
-    private boolean mSoundOn = false;
+    private SoundPool mSounds;
+    private int mHumanMoveSoundID;
+    private int mComputerMoveSoundID;
 */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mHumanMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.x_so);
+        mComputerMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.o_so);
+       // mHumanMoveSoundID = mSounds.load(this, R.raw.x_so, 1);
+        //mComputerMoveSoundID = mSounds.load(this, R.raw.o_so, 1);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mHumanMediaPlayer.release();
+        mComputerMediaPlayer.release();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     private void startNewGame() {
         mGame.clearBoard();
         mBoardView.invalidate();   // Redraw the board
-        // mHumanFirst = !mHumanFirst;
+        //mHumanFirst = !mHumanFirst;
 
     /*
     //comentamos los botones para dibujar el tablero
@@ -137,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
             //if (!mGameOver && setMove(TicTacToeGame.HUMAN_PLAYER, pos) )	{
             if (!mGameOver )	{
                 setMove(TicTacToeGame.HUMAN_PLAYER, pos);
+                mHumanMediaPlayer.start();
 
                 // If no winner yet, let the computer make a move
                  int winner = mGame.checkForWinner();
@@ -145,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         int move = mGame.getComputerMove();
                         //setMove(mGame.COMPUTER_PLAYER, move);
                         setMove(TicTacToeGame.COMPUTER_PLAYER, move);
+                        mComputerMediaPlayer.start();
                         winner = mGame.checkForWinner();
                     }
 
@@ -229,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean setMove(char player, int location) {
             if (mGame.setMove(player, location)) {
                 mBoardView.invalidate(); // Redraw the board
+
                 return true;
             }
             return false;
