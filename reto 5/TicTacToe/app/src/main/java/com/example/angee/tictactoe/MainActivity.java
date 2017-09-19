@@ -159,10 +159,10 @@ public class MainActivity extends AppCompatActivity {
                  int winner = mGame.checkForWinner();
                  if (winner == 0) {
                      mInfoTextView.setText(R.string.turn_computer);
-                        turnComputer();
+                     turnComputer();
                      winner = mGame.checkForWinner();
-
                     }
+                    //winner = mGame.checkForWinner();
 
                     if (winner == 0)
                         mInfoTextView.setText(R.string.turn_human);
@@ -182,6 +182,8 @@ public class MainActivity extends AppCompatActivity {
                         mAndroidCount.setText(Integer.toString(mAndroidCounter));
                         mGameOver = true;
                     }
+
+                mBoardView.invalidate();
             }
                 return false;
         }
@@ -355,11 +357,12 @@ public class MainActivity extends AppCompatActivity {
     private void turnComputer() {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
-            public void run() {int move = mGame.getComputerMove();
+            public void run() {
+                int move = mGame.getComputerMove();
                 //setMove(mGame.COMPUTER_PLAYER, move);
                 setMove(TicTacToeGame.COMPUTER_PLAYER, move);
                 mComputerMediaPlayer.start();
-
+                mBoardView.invalidate();
             }
         }, 1000);
     }
