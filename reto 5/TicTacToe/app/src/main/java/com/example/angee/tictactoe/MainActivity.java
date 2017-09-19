@@ -122,14 +122,6 @@ public class MainActivity extends AppCompatActivity {
         mBoardView.invalidate();   // Redraw the board
         //mHumanFirst = !mHumanFirst;
 
-    /*
-    //comentamos los botones para dibujar el tablero
-        // Reset buttons
-        for (int i = 0; i < mBoardButtons.length; i++) {
-            mBoardButtons[i].setText("");
-            mBoardButtons[i].setEnabled(true);
-            mBoardButtons[i].setOnClickListener(new ButtonClickListener(i));
-        }*/
         // Human start
         if(mHumanFirst) {
             mInfoTextView.setText(R.string.first_human);
@@ -140,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
             mInfoTextView.setText(R.string.turn_computer);
             int move = mGame.getComputerMove();
             setMove(mGame.COMPUTER_PLAYER, move);
+            mComputerMediaPlayer.start();
             mHumanFirst = true;
         }
         //mBoardView.invalidate();   // Redraw the board
@@ -166,11 +159,9 @@ public class MainActivity extends AppCompatActivity {
                  int winner = mGame.checkForWinner();
                  if (winner == 0) {
                      mInfoTextView.setText(R.string.turn_computer);
-                        int move = mGame.getComputerMove();
-                        //setMove(mGame.COMPUTER_PLAYER, move);
-                        setMove(TicTacToeGame.COMPUTER_PLAYER, move);
-                        mComputerMediaPlayer.start();
-                        winner = mGame.checkForWinner();
+                        turnComputer();
+                     winner = mGame.checkForWinner();
+
                     }
 
                     if (winner == 0)
@@ -359,5 +350,17 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return dialog;
+    }
+
+    private void turnComputer() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {int move = mGame.getComputerMove();
+                //setMove(mGame.COMPUTER_PLAYER, move);
+                setMove(TicTacToeGame.COMPUTER_PLAYER, move);
+                mComputerMediaPlayer.start();
+
+            }
+        }, 1000);
     }
 }
