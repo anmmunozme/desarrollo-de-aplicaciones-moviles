@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private int mComputerMoveSoundID;
 */
     private SharedPreferences mPrefs;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -83,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
         mGame = new TicTacToeGame();
         mBoardView = (BoardView) findViewById(R.id.board);
         mBoardView.setGame(mGame);
+
+        //guardar
+        mPrefs = getSharedPreferences("ttt_prefs", MODE_PRIVATE);
+        // Restore the scores
+        mHumanCounter = mPrefs.getInt("mHumanWins", 0);
+        mAndroidCounter = mPrefs.getInt("mComputerWins", 0);
+        mTieCounter = mPrefs.getInt("mTies", 0);
 
         // Listen for touches on the board
         mBoardView.setOnTouchListener(mTouchListener);
@@ -121,12 +129,6 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             startNewGame();
         }
-
-        mPrefs = getSharedPreferences("ttt_prefs", MODE_PRIVATE);
-        // Restore the scores
-        mHumanCounter = mPrefs.getInt("mHumanWins", 0);
-        mAndroidCounter = mPrefs.getInt("mComputerWins", 0);
-        mTieCounter = mPrefs.getInt("mTies", 0);
 
     }
 
@@ -318,6 +320,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.ai_difficulty:
                 showDialog(DIALOG_DIFFICULTY_ID);
+                return true;
+            case R.id.resetScores:
+                mHumanCounter=0;
+                mAndroidCounter=0;
+                mTieCounter=0;
+                displayScores();
                 return true;
             case R.id.quit:
                 showDialog(DIALOG_QUIT_ID);

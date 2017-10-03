@@ -18,6 +18,10 @@
         android:icon="@android:drawable/ic_lock_power_off"
         android:title="@string/quit"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/resetScores"
+        android:title="@string/resetScore"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/about"

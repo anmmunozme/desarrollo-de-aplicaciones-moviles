@@ -27,6 +27,8 @@
     <string name="yes">Si</string>
     <string name="no">No</string>
 
+    <string name="resetScore">Reset Scores</string>
+
     <string name="by_name">Tic Tac Toe</string>
     <string name="by">By Angela Munoz</string>
     <string name="description">Choose from one of three difficulty levels. Don\'t let the Android beat you!</string>
