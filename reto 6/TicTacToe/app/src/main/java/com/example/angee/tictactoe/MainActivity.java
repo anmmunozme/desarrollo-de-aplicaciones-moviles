@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private int mHumanMoveSoundID;
     private int mComputerMoveSoundID;
 */
+    private SharedPreferences mPrefs;
     @Override
     protected void onResume() {
         super.onResume();
@@ -114,8 +115,42 @@ public class MainActivity extends AppCompatActivity {
        // mGame = new TicTacToeGame();
 
         //mButtonMenu.setOnClickListener(new ButtonClickListener());
-        startNewGame();
+        //startNewGame();
+
+        //saved
+        if (savedInstanceState == null) {
+            startNewGame();
+        }
+
+        mPrefs = getSharedPreferences("ttt_prefs", MODE_PRIVATE);
+        // Restore the scores
+        mHumanCounter = mPrefs.getInt("mHumanWins", 0);
+        mAndroidCounter = mPrefs.getInt("mComputerWins", 0);
+        mTieCounter = mPrefs.getInt("mTies", 0);
+
     }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        mGame.setBoardState(savedInstanceState.getCharArray("board"));
+        mGameOver = savedInstanceState.getBoolean("mGameOver");
+        mInfoTextView.setText(savedInstanceState.getCharSequence("info"));
+        mHumanCounter = savedInstanceState.getInt("mHumanWins");
+        mAndroidCounter = savedInstanceState.getInt("mComputerWins");
+        mTieCounter = savedInstanceState.getInt("mTies");
+        mGoFirst = savedInstanceState.getChar("mGoFirst");
+        mHumanFirst = savedInstanceState.getBoolean("mHumanFirst");
+        displayScores();
+    }
+    private void displayScores() {
+        mHumanCount.setText(Integer.toString(mHumanCounter));
+        mAndroidCount.setText(Integer.toString(mAndroidCounter));
+        mTieCount.setText(Integer.toString(mTieCounter));
+    }
+
 
     private void startNewGame() {
         mBoardView.invalidate();   // Redraw the board
@@ -365,4 +400,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 1000);
     }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putCharArray("board", mGame.getBoardState());
+        outState.putBoolean("mGameOver", mGameOver);
+        outState.putInt("mHumanWins", Integer.valueOf(mHumanCounter));
+        outState.putInt("mComputerWins", Integer.valueOf(mAndroidCounter));
+        outState.putInt("mTies", Integer.valueOf(mTieCounter));
+        outState.putCharSequence("info", mInfoTextView.getText());
+        outState.putChar("mGoFirst", mGoFirst);
+        outState.putBoolean("mHumanFirst", mHumanFirst);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // Save the current scores
+        SharedPreferences.Editor ed = mPrefs.edit();
+        ed.putInt("mHumanWins", mHumanCounter);
+        ed.putInt("mComputerWins", mAndroidCounter);
+        ed.putInt("mTies", mTieCounter);
+        ed.commit();
+    }
+
 }
