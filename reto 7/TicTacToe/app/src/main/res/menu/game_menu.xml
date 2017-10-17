@@ -7,11 +7,17 @@
         android:title="@string/newGame_label"
         android:visible="true"
         app:showAsAction="ifRoom" />
-
+<!--
     <item
         android:id="@+id/ai_difficulty"
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="@string/difficulty"
+        app:showAsAction="ifRoom" />
+        -->
+    <item
+        android:id="@+id/settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/settings"
         app:showAsAction="ifRoom" />
 
     <item

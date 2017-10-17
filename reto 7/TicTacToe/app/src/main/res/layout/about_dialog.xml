@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+
+    <LinearLayout
+        android:id="@+id/l"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_weight="0.03">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="false"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icon"
+                tools:layout_constraintBottom_creator="1"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintTop_creator="1"
+                tools:layout_conversion_absoluteHeight="312dp"
+                tools:layout_conversion_absoluteWidth="365dp"
+                tools:layout_conversion_absoluteX="9dp"
+                tools:layout_conversion_absoluteY="9dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="29dp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:lines="2"
+                android:text="@string/by_name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+                tools:layout_conversion_absoluteHeight="36dp"
+                tools:layout_conversion_absoluteWidth="368dp"
+                tools:layout_conversion_absoluteX="8dp"
+                tools:layout_conversion_absoluteY="352dp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="352dp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="32dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:lines="2"
+                android:text="@string/by"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+                tools:layout_conversion_absoluteHeight="27dp"
+                tools:layout_conversion_absoluteWidth="368dp"
+                tools:layout_conversion_absoluteX="8dp"
+                tools:layout_conversion_absoluteY="325dp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="325dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:maxLines="4"
+                android:text="@string/description"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="17sp"
+                tools:layout_conversion_absoluteHeight="41dp"
+                tools:layout_conversion_absoluteWidth="366dp"
+                tools:layout_conversion_absoluteX="9dp"
+                tools:layout_conversion_absoluteY="395dp"
+                tools:layout_editor_absoluteX="9dp"
+                tools:layout_editor_absoluteY="395dp" />
+        </TableRow>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

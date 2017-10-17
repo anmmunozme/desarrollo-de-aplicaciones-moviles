@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TicTacToeGame mGame;
 
-    static final int DIALOG_DIFFICULTY_ID = 0;
+    //static final int DIALOG_DIFFICULTY_ID = 0;
     static final int DIALOG_QUIT_ID = 1;
 
 
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mHumanMediaPlayer;
     MediaPlayer mComputerMediaPlayer;
+
+    private boolean mSoundOn = true;
 /*
     private SoundPool mSounds;
     private int mHumanMoveSoundID;
@@ -74,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        mHumanMediaPlayer.release();
-        mComputerMediaPlayer.release();
+            mHumanMediaPlayer.release();
+            mComputerMediaPlayer.release();
     }
 
     @Override
@@ -135,12 +139,29 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             startNewGame();
         }
+
+        //cambio en el reto 7
+        /*
         levels = new CharSequence[]{
                 getResources().getString(R.string.difficulty_easy),
                 getResources().getString(R.string.difficulty_harder),
                 getResources().getString(R.string.difficulty_expert)};
 
         mGame.setDifficultyLevel(TicTacToeGame.DifficultyLevel.valueOf(levels[difficulty].toString()));
+        */
+        //reto 7
+        // Restore the scores from the persistent preference data source
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mSoundOn = mPrefs.getBoolean("sound", true);
+        String difficultyLevel = mPrefs.getString("difficulty_level",
+                getResources().getString(R.string.difficulty_harder));
+        if (difficultyLevel.equals(getResources().getString(R.string.difficulty_easy)))
+            mGame.setDifficultyLevel(TicTacToeGame.DifficultyLevel.Easy);
+        else if (difficultyLevel.equals(getResources().getString(R.string.difficulty_harder)))
+            mGame.setDifficultyLevel(TicTacToeGame.DifficultyLevel.Harder);
+        else
+            mGame.setDifficultyLevel(TicTacToeGame.DifficultyLevel.Expert);
+
     }
 
 
@@ -203,7 +224,8 @@ mHumanFirst = true;
             //if (!mGameOver && setMove(TicTacToeGame.HUMAN_PLAYER, pos) )	{
             if (!mGameOver){
                 setMove(TicTacToeGame.HUMAN_PLAYER, pos);
-                mHumanMediaPlayer.start();
+                if(mSoundOn)
+                    mHumanMediaPlayer.start();
 
                 // If no winner yet, let the computer make a move
                  int winner = mGame.checkForWinner();
@@ -222,9 +244,11 @@ mHumanFirst = true;
                         mTieCount.setText(Integer.toString(mTieCounter));
                         mGameOver = true;
                     } else if (winner == 2) {
-                        mInfoTextView.setText(R.string.result_human_wins);
+                        //mInfoTextView.setText(R.string.result_human_wins);
                         mHumanCounter++;
                         mHumanCount.setText(Integer.toString(mHumanCounter));
+                        String defaultMessage = getResources().getString(R.string.result_human_wins);
+                        mInfoTextView.setText(mPrefs.getString("victory_message", defaultMessage));
                         mGameOver = true;
                     } else {
                         mInfoTextView.setText(R.string.result_computer_wins);
@@ -331,9 +355,13 @@ mHumanFirst = true;
             case R.id.new_game:
                 startNewGame();
                 return true;
-            case R.id.ai_difficulty:
+            /*case R.id.ai_difficulty:
                 showDialog(DIALOG_DIFFICULTY_ID);
+                return true;*/
+            case R.id.settings:
+                startActivityForResult(new Intent(this, Settings.class), 0);
                 return true;
+
             case R.id.resetScores:
                 mHumanCounter=0;
                 mAndroidCounter=0;
@@ -363,7 +391,7 @@ mHumanFirst = true;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         switch(id) {
-            case DIALOG_DIFFICULTY_ID:
+            /*case DIALOG_DIFFICULTY_ID:
 
                 builder.setTitle(R.string.difficulty_choose);
 
@@ -394,8 +422,8 @@ mHumanFirst = true;
                             }
                         });
                 dialog = builder.create();
+                break;*/
 
-                break;
             case DIALOG_QUIT_ID:
                 // Create the quit confirmation dialog
                 builder.setMessage(R.string.quit_question)
@@ -418,7 +446,8 @@ mHumanFirst = true;
             public void run() {
                 int move = mGame.getComputerMove();
                 setMove(TicTacToeGame.COMPUTER_PLAYER, move);
-                mComputerMediaPlayer.start();
+                if(mSoundOn)
+                    mComputerMediaPlayer.start();
                 mBoardView.invalidate();
             }
         }, 1000);
@@ -448,4 +477,24 @@ mHumanFirst = true;
         ed.commit();
     }
 
+    //settings reto7
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == RESULT_CANCELED) {
+            // Apply potentially new settings
+
+            mSoundOn = mPrefs.getBoolean("sound", true);
+
+            String difficultyLevel = mPrefs.getString("difficulty_level",
+                    getResources().getString(R.string.difficulty_harder));
+
+            if (difficultyLevel.equals(getResources().getString(R.string.difficulty_easy)))
+                mGame.setDifficultyLevel(TicTacToeGame.DifficultyLevel.Easy);
+            else if (difficultyLevel.equals(getResources().getString(R.string.difficulty_harder)))
+                mGame.setDifficultyLevel(TicTacToeGame.DifficultyLevel.Harder);
+            else
+                mGame.setDifficultyLevel(TicTacToeGame.DifficultyLevel.Expert);
+        }
+    }
 }
