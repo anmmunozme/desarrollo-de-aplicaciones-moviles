@@ -20,5 +20,10 @@
         android:defaultValue="@string/difficulty_expert"
         android:entries="@array/list_difficulty_level"
         android:entryValues="@array/list_difficulty_level" />
+    <Preference
+        android:key="color_board"
+        android:title="Board Color"
+        android:summary=""
+        />
 
 </PreferenceScreen>

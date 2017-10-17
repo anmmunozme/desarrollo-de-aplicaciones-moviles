@@ -56,6 +56,13 @@ public class Settings extends PreferenceActivity {
             }
         });
 
+        final Preference boardColorPref = (Preference) findPreference("color_board");
+        String boardColor = prefs.getString("color_board",
+                getResources().getString(R.string.board_c));
+        boardColorPref.setSummary((CharSequence) boardColor);
+        //tomado de video
+        //https://www.youtube.com/watch?v=smjGgLbiQxk
+
     }
 
 }
