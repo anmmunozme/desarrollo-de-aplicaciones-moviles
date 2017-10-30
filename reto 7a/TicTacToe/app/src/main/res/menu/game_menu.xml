@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/new_game"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/newGame_label"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+<!--
+    <item
+        android:id="@+id/ai_difficulty"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="@string/difficulty"
+        app:showAsAction="ifRoom" />
+        -->
+    <item
+        android:id="@+id/settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/settings"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/resetScores"
+        android:title="@string/resetScore"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/about"
+        android:title="@string/about_game"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/quit"
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:title="@string/quit"
+        app:showAsAction="never" />
+
+</menu>
